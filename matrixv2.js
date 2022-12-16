@@ -1,5 +1,5 @@
 <!-- HTML -->
-<canvas id="matrix-canvas"></canvas>
+//<canvas id="matrix-canvas"></canvas>
 
 <!-- JavaScript -->
 <script>
