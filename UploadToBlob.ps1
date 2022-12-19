@@ -2,7 +2,6 @@
     Note that this function uses the Azure PowerShell cmdlets to interact with Azure Storage. 
     In order to use these cmdlets, you will need to install the Azure PowerShell module and 
     authenticate to your Azure account.
-#>
 
 function UploadFileToBlob {
     [CmdletBinding()]
@@ -56,3 +55,21 @@ function UploadFileToBlob {
         return [System.Web.Http.Results.BadRequestObjectResult]::new("Error uploading file to blob storage: $errorMessage")
     }
 }
+#>
+
+$storageAccountName = "mystorageaccount"
+$storageAccountKey = "storageaccountkey"
+$containerName = "mycontainer"
+
+# Connect to the storage account
+$storageContext = New-AzureStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storageAccountKey
+
+# Set the path to the file you want to upload
+$filePath = "C:\path\to\myfile.txt"
+
+# Set the name that the file will have in the blob container
+$blobName = "myblob.txt"
+
+# Upload the file to the container
+Set-AzureStorageBlobContent -File $filePath -Container $containerName -Blob $blobName -Context $storageContext
+
