@@ -1,3 +1,9 @@
+<#
+    Note that this function uses the Azure PowerShell cmdlets to interact with Azure Storage. 
+    In order to use these cmdlets, you will need to install the Azure PowerShell module and 
+    authenticate to your Azure account.
+#>
+
 function UploadFileToBlob {
     [CmdletBinding()]
     param(
