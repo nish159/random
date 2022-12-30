@@ -208,3 +208,44 @@ function deleteButtons() {
 
 onLoadCartNumbers();
 displayCart();
+
+
+/*
+function displayCart() {
+    let cartItems = localStorage.getItem('productsInCart');
+    cartItems = JSON.parse(cartItems);
+    
+    let cart = localStorage.getItem("totalCost");
+    cart = parseInt(cart);
+
+    let productContainer = document.querySelector('.shop');
+
+    if (cartItems && productContainer) {
+        productContainer.innerHTML = '';
+        Object.values(cartItems).map((x) => {
+
+            let {name, tag, price, inCart} = x;
+
+            productContainer.innerHTML += 
+            `<div class="product">
+                <i id="remove" class="bx bx-x"></i>
+                <img src="./assets/products/${tag}.jpg">
+                <span>${name}</span>
+                <div class="price">$${price}.00</div>
+                <div class="quantity">
+                    <i onclick="decrement(${tag})" class="bx bx-minus"></i>
+                        <span>${inCart}</span>
+                    <i onclick="increment(${tag})" class="bx bx-plus"></i>
+                </div>
+                <div class="total">$${price * inCart}.00</div>
+            </div>`;
+        });
+
+        productContainer.innerHTML += `
+            <div class="basketTotalContainer">
+                <h4 class="basketTotalTitle">Total:</h4>
+                <h4 class="basketTotal">$${cart}.00</h4>
+            </div>`
+    }
+}
+*/
