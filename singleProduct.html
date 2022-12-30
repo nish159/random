@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta001</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <section id="front-page">
+        <div id="navbar">
+            <a href="index.html">H0ME</a>
+            <a href="shop.html">SH0P</a>
+            <a href="about.html">AB0UT</a>
+            <a href="contact.html">C0NTACT</a>
+            <a id="lg-bag" href="cart.html"><i class='bx bxs-cart'><span>0</span></i></a>
+            <a href="#" id="close"><i class="bx bx-x"></i></a>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class='bx bxs-cart'><span>0</span></i></a>
+            <i id="bar" class='bx bx-menu'></i>
+        </div>
+    </section>
+
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img src="assets/products/gryhoodie.jpg" width="100%" id="MainImage" alt="">
+
+            <div class="small-img-group">
+                <div class="small-img-col">
+                    <img src="assets/products/gryhoodie.jpg" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="assets/products/whoodie.png" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="assets/products/wtee.jpg" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="assets/products/gryhoodie.jpg" width="100%" class="small-img" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="single-pro-details">
+            <h6>GR3Y MATT3R</h6>
+            <h4>UNIS3X HOODIE</h4>
+            <h2>$35</h2>
+            <select name="size">
+                <option>Select Size</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+            </select>
+            <input type="number" value="1" placeholder="0">
+            <button id="add-to-cart" class="normal">ADD TO CART</button>
+            <h4>PRODUCT D3TAILS</h4>
+            <span>Double-lined hood with color-matched drawcord Spun yarn for softer feel and reduced pilling Classic fit tubular body Classic midweight fabric with DryBlend® technology: delivers moisture-wicking properties Double-needle stitching at shoulders, armholes, neck, waistband and cuffs Grey pearlized tear away label Transitioning to New Grey Razor Label in 2022 1x1 rib with spandex for enhanced stretch and recovery Double-needle pouch pocket for added reinforcement 100% of our fabric cutting scraps are recycled into fiber and used in new products 33% of the energy used to manufacture our products comes from renewable resources</span>
+        </div>
+    </section>
+    
+    <footer class="section-p1">
+        <div class="col">
+            <h4>C0NTACT</h4>
+            <p><strong>Email:</strong>testdummy@outlook.com</p>
+            <div class="follow">
+                <h4>FOLLOW US</h4>
+                <div class="icon">
+                    <i class='bx bxl-instagram'></i>
+                    <i class='bx bxl-twitter'></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <h4>ABOUT</h4>
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Contact Us</a>
+        </div>
+        
+        <div class="col">
+            <h4>MY ACCOUNT</h4>
+            <a href="#">Sign In</a>
+            <a href="#">View Cart</a>
+            <a href="#">Track Order</a>
+            <a href="#">Help</a>
+        </div>
+
+        <div class="copyright">
+            <p>© 2023, [Company]</p>
+        </div>
+    </footer>
+
+    <script>
+        var MainImage = document.getElementById("MainImage");
+        var smallImg = document.getElementsByClassName("small-img");
+
+        smallImg[0].onclick = function(){
+            MainImage.src = smallImg[0].src;
+        }
+        smallImg[1].onclick = function(){
+            MainImage.src = smallImg[1].src;
+        }
+        smallImg[2].onclick = function(){
+            MainImage.src = smallImg[2].src;
+        }
+        smallImg[3].onclick = function(){
+            MainImage.src = smallImg[3].src;
+        }
+    </script>
+
+    <script src="configuration.js"></script>
+</body>
+</html>
+
+/* 
+/* Single Product */
+#prodetails{
+    display: flex;
+    margin-top: 20px;
+}
+
+#prodetails .single-pro-image{
+    width: 40%;
+    margin-right: 50px;
+}
+
+#prodetails .single-pro-details{
+    width: 50%;
+    padding-top: 30px;
+}
+
+#prodetails .single-pro-details h6{
+    color: whitesmoke;
+}
+
+#prodetails .single-pro-details h4{
+    color: whitesmoke;
+    padding: 40px 0 20px 0;
+}
+
+#prodetails .single-pro-details h2{
+    color: whitesmoke;
+    font-size: 26px;
+    text-align: justify;
+}
+
+#prodetails .single-pro-details select{
+    display: block;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+#prodetails .single-pro-details input{
+    width: 50px;
+    height: 47px;
+    padding-left: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#prodetails .single-pro-details span{
+    color: whitesmoke;
+    line-height: 15px;
+}
+
+#prodetails .single-pro-details button{
+    font-weight: 500;
+}
+
+#prodetails .single-pro-details input:focus{
+    outline: none;
+}
+
+.small-img-group{
+    display: flex;
+    justify-content: space-between;
+}
+
+.small-img-col{
+    flex-basis: 24%;
+    cursor: pointer;
+}
+
+@media (max-width:799px) {
+  /* Single Product */
+    #prodetails{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #prodetails .single-pro-image{
+        width: 100%;
+        margin-right: 0px;
+    }
+
+    #prodetails .single-pro-details{
+        width: 100%;
+    }
+}
+*/
