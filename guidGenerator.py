@@ -1,6 +1,8 @@
 import uuid
 
 def generate_guid():
-    return str(uuid.uuid4())
+    guid = str(uuid.uuid4())
+    return guid.replace('-', '')
 
-print(generate_guid())  # Outputs a new GUID on each call
+print(generate_guid())  # Outputs a new GUID on each call without hyphens
+
