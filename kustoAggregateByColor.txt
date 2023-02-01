@@ -1,3 +1,4 @@
+# bar chart
 let threshold1 = 10;
 let threshold2 = 15;
 datatable(priority: string, tickets: int)
@@ -10,7 +11,7 @@ datatable(priority: string, tickets: int)
 | project priority, tickets, color
 | render barchart with (x = priority, y = tickets, color = color)
 
-
+# metric
 let threshold1 = 10;
 let threshold2 = 15;
 datatable(priority: string, tickets: int)
