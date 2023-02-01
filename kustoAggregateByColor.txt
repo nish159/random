@@ -1,0 +1,11 @@
+let threshold1 = 10;
+let threshold2 = 15;
+datatable(priority: string, tickets: int)
+[
+    "Low", 5,
+    "Medium", 12,
+    "High", 20
+]
+| extend color = iff(tickets >= threshold2, "red", iff(tickets >= threshold1, "yellow", "green"))
+| project priority, tickets, color
+| render barchart with (x = priority, y = tickets, color = color)
