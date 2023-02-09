@@ -150,3 +150,5 @@ function Export-VMDataToCSV([VMData[]]$dataArray, [string]$filePath)
 {
     $dataArray | Export-Csv -Path $filePath -NoTypeInformation
 }
+
+Export-VMDataToCSV -dataArray $vmDataArray -filePath "C:\vmData.csv"
