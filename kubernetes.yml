@@ -1,0 +1,60 @@
+apiVersion: "2021-02-01"
+location: <location> # Replace with the location where you want to deploy the cluster
+name: <cluster-name> # Replace with a name for your AKS cluster
+type: Microsoft.ContainerService/managedClusters
+properties:
+  kubernetesVersion: "1.22.2" # Replace with the version of Kubernetes you want to use
+  dnsPrefix: <dns-prefix> # Replace with a DNS prefix for your AKS cluster
+  agentPoolProfiles:
+  - name: agentpool1
+    count: 3 # Replace with the number of nodes you want in the agent pool
+    vmSize: Standard_DS2_v2 # Replace with the VM size you want to use for the nodes
+    osDiskSizeGB: 30 # Replace with the size of the OS disk for each node
+  servicePrincipalProfile:
+    clientId: <client-id> # Replace with the client ID for the service principal
+    secret: <client-secret> # Replace with the client secret for the service principal
+  networkProfile:
+    networkPlugin: azure
+    podCidr: 10.244.0.0/16
+    serviceCidr: 10.0.0.0/16
+  enableRBAC: true # Replace with "false" if you don't want to enable RBAC
+  enablePodSecurityPolicy: true # Replace with "false" if you don't want to enable Pod Security Policy
+  enableAzurePolicy: true # Replace with "false" if you don't want to enable Azure Policy
+  tags:
+    <tag1-name>: <tag1-value> # Replace with any tags you want to apply to your AKS cluster
+    <tag2-name>: <tag2-value>
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  selector:
+    matchLabels:
+      app: hello-world
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - name: hello-world
+        image: nginx
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+spec:
+  selector:
+    app: hello-world
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  type: NodePort
