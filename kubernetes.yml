@@ -1,29 +1,56 @@
-apiVersion: "2021-02-01"
-location: <location> # Replace with the location where you want to deploy the cluster
-name: <cluster-name> # Replace with a name for your AKS cluster
-type: Microsoft.ContainerService/managedClusters
-properties:
-  kubernetesVersion: "1.22.2" # Replace with the version of Kubernetes you want to use
-  dnsPrefix: <dns-prefix> # Replace with a DNS prefix for your AKS cluster
-  agentPoolProfiles:
-  - name: agentpool1
-    count: 3 # Replace with the number of nodes you want in the agent pool
-    vmSize: Standard_DS2_v2 # Replace with the VM size you want to use for the nodes
-    osDiskSizeGB: 30 # Replace with the size of the OS disk for each node
-  servicePrincipalProfile:
-    clientId: <client-id> # Replace with the client ID for the service principal
-    secret: <client-secret> # Replace with the client secret for the service principal
-  networkProfile:
-    networkPlugin: azure
-    podCidr: 10.244.0.0/16
-    serviceCidr: 10.0.0.0/16
-  enableRBAC: true # Replace with "false" if you don't want to enable RBAC
-  enablePodSecurityPolicy: true # Replace with "false" if you don't want to enable Pod Security Policy
-  enableAzurePolicy: true # Replace with "false" if you don't want to enable Azure Policy
-  tags:
-    <tag1-name>: <tag1-value> # Replace with any tags you want to apply to your AKS cluster
-    <tag2-name>: <tag2-value>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <deployment-name>
+spec:
+  replicas: <number-of-replicas>
+  selector:
+    matchLabels:
+      app: <app-name>
+  template:
+    metadata:
+      labels:
+        app: <app-name>
+    spec:
+      containers:
+        - name: <container-name>
+          image: <image-name>
+          ports:
+            - containerPort: <container-port>
+          env:
+            - name: <env-variable-name>
+              value: <env-variable-value>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <service-name>
+spec:
+  selector:
+    app: <app-name>
+  ports:
+    - name: <port-name>
+      protocol: TCP
+      port: <port-number>
+      targetPort: <container-port>
+  type: LoadBalancer
 
+
+# Here are the variables you will need to replace:
+
+# <deployment-name>: Name of your deployment
+# <number-of-replicas>: Number of replicas you want to create
+# <app-name>: Name of your application
+# <container-name>: Name of your container
+# <image-name>: Name of the Docker image you want to use
+# <container-port>: Port number your container will listen on
+# <env-variable-name>: Name of the environment variable you want to set
+# <env-variable-value>: Value of the environment variable you want to set
+# <service-name>: Name of your service
+# <port-name>: Name of the port you want to expose
+# <port-number>: Port number you want to expose
+
+# Once you have updated the variables, save the file with a .yaml extension and then use kubectl apply -f <filename>.yaml to apply the manifest to your AKS cluster.
 
 apiVersion: apps/v1
 kind: Deployment
@@ -58,3 +85,30 @@ spec:
     port: 80
     targetPort: 80
   type: NodePort
+
+
+apiVersion: "2021-02-01"
+location: <location> # Replace with the location where you want to deploy the cluster
+name: <cluster-name> # Replace with a name for your AKS cluster
+type: Microsoft.ContainerService/managedClusters
+properties:
+  kubernetesVersion: "1.22.2" # Replace with the version of Kubernetes you want to use
+  dnsPrefix: <dns-prefix> # Replace with a DNS prefix for your AKS cluster
+  agentPoolProfiles:
+  - name: agentpool1
+    count: 3 # Replace with the number of nodes you want in the agent pool
+    vmSize: Standard_DS2_v2 # Replace with the VM size you want to use for the nodes
+    osDiskSizeGB: 30 # Replace with the size of the OS disk for each node
+  servicePrincipalProfile:
+    clientId: <client-id> # Replace with the client ID for the service principal
+    secret: <client-secret> # Replace with the client secret for the service principal
+  networkProfile:
+    networkPlugin: azure
+    podCidr: 10.244.0.0/16
+    serviceCidr: 10.0.0.0/16
+  enableRBAC: true # Replace with "false" if you don't want to enable RBAC
+  enablePodSecurityPolicy: true # Replace with "false" if you don't want to enable Pod Security Policy
+  enableAzurePolicy: true # Replace with "false" if you don't want to enable Azure Policy
+  tags:
+    <tag1-name>: <tag1-value> # Replace with any tags you want to apply to your AKS cluster
+    <tag2-name>: <tag2-value>
