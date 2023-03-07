@@ -57,19 +57,96 @@ function UploadFileToBlob {
 }
 #>
 
-$storageAccountName = "mystorageaccount"
-$storageAccountKey = "storageaccountkey"
-$containerName = "mycontainer"
+# Create a new storage account and upload to ABS
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$StorageAccountName,
 
-# Connect to the storage account
-$storageContext = New-AzureStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storageAccountKey
+    [Parameter(Mandatory = $true)]
+    [string]$StorageAccountKey,
 
-# Set the path to the file you want to upload
-$filePath = "C:\path\to\myfile.txt"
+    [Parameter(Mandatory = $true)]
+    [string]$ContainerName,
 
-# Set the name that the file will have in the blob container
-$blobName = "myblob.txt"
+    [Parameter(Mandatory = $true)]
+    [string]$LocalFilePath,
 
-# Upload the file to the container
-Set-AzureStorageBlobContent -File $filePath -Container $containerName -Blob $blobName -Context $storageContext
+    [Parameter(Mandatory = $true)]
+    [string]$BlobName
+)
+
+# Authenticate to Azure
+Connect-AzAccount
+
+# Create a storage context
+$storageContext = New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey
+
+# Upload the file to the Blob Storage container
+Set-AzStorageBlobContent -Context $storageContext -Container $ContainerName -File $LocalFilePath -Blob $BlobName
+
+# Upload to an existing storage account
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$ContainerName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$LocalFilePath,
+
+    [Parameter(Mandatory = $true)]
+    [string]$BlobName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$StorageAccountName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$StorageAccountKey
+)
+
+# Create a storage context
+$storageContext = New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey
+
+# Upload the file to the Blob Storage container
+Set-AzStorageBlobContent -Context $storageContext -Container $ContainerName -File $LocalFilePath -Blob $BlobName
+
+# Upload to existing storage account values without hardcoding the values
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$ContainerName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$LocalFilePath,
+
+    [Parameter(Mandatory = $true)]
+    [string]$BlobName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$KeyVaultName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$SecretNameClientId,
+
+    [Parameter(Mandatory = $true)]
+    [string]$SecretNameClientSecret
+)
+
+# Authenticate to Azure using a service principal
+$clientId = (Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $SecretNameClientId).SecretValueText
+$clientSecret = (Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $SecretNameClientSecret).SecretValueText
+$tenantId = (Get-AzContext).Tenant.Id
+
+$securePassword = ConvertTo-SecureString $clientSecret -AsPlainText -Force
+$psCredential = New-Object System.Management.Automation.PSCredential($clientId, $securePassword)
+
+Connect-AzAccount -ServicePrincipal -Credential $psCredential -TenantId $tenantId
+
+# Get the storage account name and access key from Key Vault
+$storageAccountName = (Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name "<storage account name>").SecretValueText
+$storageAccountKey = (Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name "<storage account key>").SecretValueText
+
+# Create a storage context
+$storageContext = New-AzStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storageAccountKey
+
+# Upload the file to the Blob Storage container
+Set-AzStorageBlobContent -Context $storageContext -Container $ContainerName -File $LocalFilePath -Blob $BlobName
+
 
