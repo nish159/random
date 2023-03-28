@@ -88,3 +88,36 @@ $DataFactory = Get-AzDataFactoryV2 -Name $DataFactoryName -ResourceGroupName "yo
 
 # Create or update the Azure Data Factory pipeline
 Set-AzDataFactoryV2Pipeline -DataFactory $DataFactory -DefinitionFile $Pipeline -Force
+
+####################################################################################################################################################
+
+# Define variables
+$StorageAccountName = "<storage_account_name>"
+$StorageAccountKey = "<storage_account_key>"
+$ContainerName = "<container_name>"
+$BlobName = "<blob_name>"
+$DataFactoryName = "<data_factory_name>"
+$ResourceGroupName = "<resource_group_name>"
+$DataFactorySubscriptionId = "<subscription_id>"
+
+# Connect to Azure and select subscription
+Connect-AzAccount
+Select-AzSubscription -SubscriptionId $DataFactorySubscriptionId
+
+# Get storage account key
+$StorageAccountContext = New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey
+
+# Get the blob
+$Blob = Get-AzStorageBlob -Context $StorageAccountContext -Container $ContainerName -Blob $BlobName
+
+# Upload the blob to the data factory
+$DataFactory = Get-AzDataFactoryV2 -ResourceGroupName $ResourceGroupName -Name $DataFactoryName
+$Dataset = Get-AzDataFactoryV2Dataset -ResourceGroupName $ResourceGroupName -DataFactoryName $DataFactoryName -Name "<dataset_name>"
+
+# Set the input path for the dataset
+$InputPath = $Dataset.Properties.TypeProperties.Location.Path
+$InputPath = $InputPath -replace "\\$"
+
+# Upload the blob to the input path
+Set-AzDataFactoryV2BlobDataset -ResourceGroupName $ResourceGroupName -DataFactoryName $DataFactoryName -Name "<dataset_name>" -StorageAccountName $StorageAccountName -StoragePath "$ContainerName/$BlobName" -ItemType "Binary" -InputPath $InputPath
+
