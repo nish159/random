@@ -90,6 +90,21 @@ $DataFactory = Get-AzDataFactoryV2 -Name $DataFactoryName -ResourceGroupName "yo
 Set-AzDataFactoryV2Pipeline -DataFactory $DataFactory -DefinitionFile $Pipeline -Force
 
 ####################################################################################################################################################
+# Define variables
+$StorageAccountName = "<storage_account_name>"
+$StorageAccountKey = "<storage_account_key>"
+$ContainerName = "<container_name>"
+$LocalFilePath = "<local_file_path>"
+$BlobName = "<blob_name>"
+
+# Get storage account context
+$StorageAccountContext = New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey
+
+# Upload blob
+$Blob = Set-AzStorageBlobContent -Context $StorageAccountContext -Container $ContainerName -File $LocalFilePath -Blob $BlobName
+
+Write-Output "Blob '$BlobName' uploaded to container '$ContainerName' in storage account '$StorageAccountName'."
+
 
 # Define variables
 $StorageAccountName = "<storage_account_name>"
