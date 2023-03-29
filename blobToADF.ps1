@@ -136,3 +136,21 @@ $InputPath = $InputPath -replace "\\$"
 # Upload the blob to the input path
 Set-AzDataFactoryV2BlobDataset -ResourceGroupName $ResourceGroupName -DataFactoryName $DataFactoryName -Name "<dataset_name>" -StorageAccountName $StorageAccountName -StoragePath "$ContainerName/$BlobName" -ItemType "Binary" -InputPath $InputPath
 
+$keyVault = "<name of vault>"
+$key = "<secret>"
+$getKey = Get-AzureKeyVaultSecret -VaultName $keyVault -Name $key -AsPlainText
+
+function parseVersion
+{
+	param (
+		[Parameter(Mandatory=$True)]
+		[System.string]
+		$version
+	)
+	
+	$splitVersion = $version.split(":")
+	$filteredVersion = ($splitVersion[2].Replace("{","")).Replace('"','')
+	
+	return $filteredVersion
+}
+
