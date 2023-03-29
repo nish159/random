@@ -134,7 +134,7 @@ $InputPath = $Dataset.Properties.TypeProperties.Location.Path
 $InputPath = $InputPath -replace "\\$"
 
 # Upload the blob to the input path
-Set-AzDataFactoryV2BlobDataset -ResourceGroupName $ResourceGroupName -DataFactoryName $DataFactoryName -Name "<dataset_name>" -StorageAccountName $StorageAccountName -StoragePath "$ContainerName/$BlobName" -ItemType "Binary" -InputPath $InputPath
+Set-AzDataFactoryV2Dataset -ResourceGroupName $ResourceGroupName -DataFactoryName $DataFactoryName -Name "<dataset_name>" -StorageAccountName $StorageAccountName -StoragePath "$ContainerName/$BlobName" -ItemType "Binary" -InputPath $InputPath
 
 $keyVault = "<name of vault>"
 $key = "<secret>"
