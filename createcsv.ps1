@@ -1,3 +1,39 @@
+# Define the CSV file path
+$csvPath = "C:\path\to\output.csv"
+
+# Create the CSV header
+$header = "Name,Age,City"
+
+# Add the header to the CSV file
+$header | Out-File -FilePath $csvPath -Encoding UTF8
+
+# Define the data
+$data = @(
+    [PSCustomObject]@{
+        Name = "John"
+        Age = 25
+        City = "New York"
+    },
+    [PSCustomObject]@{
+        Name = "Jane"
+        Age = 30
+        City = "London"
+    },
+    [PSCustomObject]@{
+        Name = "Mike"
+        Age = 35
+        City = "Sydney"
+    }
+)
+
+# Append the data to the CSV file
+$data | ForEach-Object {
+    $line = $_.Name + "," + $_.Age + "," + $_.City
+    $line | Out-File -FilePath $csvPath -Append -Encoding UTF8
+}
+
+=========================================================================================================================================
+
 # Run a PowerShell command and capture its output
 $output = Get-Process
 
