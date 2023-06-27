@@ -1,3 +1,60 @@
+# create the name of the columns
+$global:handles = "Handles"
+$global:NPM = "NPM(K)"
+$global:PM = "PM(K)"
+$global:WS = "WS(K)"
+$global:CPU = "CPU(s)"
+$global:ID = "Id"
+$global:SI = "SI"
+$global:processName = "ProcessName"
+
+function testcsv
+{
+    # create csv
+    $csvPath = ""
+    $dateGenerated = (Get-Date -Format "MM_dd_yyyy")
+    $file = "test_$dateGenerated.csv"
+    $global:path = "$csvPath\$file"
+
+    # add new item
+    New-Item $fullPathToCsv -ItemType File
+    Set-Content $fullPathToCsv "$handles, $NPM, $PM, $WS, $CPU, $ID, $SI, $processName"
+}
+
+function createReport
+{
+    # call csv function
+    testcsv
+
+    # create a variable for the objects
+    $process = Get-Process
+
+    # create an array for your objects
+    $objects = @()
+
+    # loop through each entry
+    foreach($objects in $process)
+    {
+        # create a new object to write to the csv 
+        $object = New-Object psobject
+        $object | Add-Member -MemberType NoteProperty $handles -Value $objects.Handles
+        $object | Add-Member -MemberType NoteProperty $NPM -Value $objects.NPM
+        $object | Add-Member -MemberType NoteProperty $PM -Value $objects.PM
+        $object | Add-Member -MemberType NoteProperty $WS -Value $objects.WS
+        $object | Add-Member -MemberType NoteProperty $CPU -Value $objects.CPU
+        $object | Add-Member -MemberType NoteProperty $ID -Value $objects.Id
+        $object | Add-Member -MemberType NoteProperty $SI -Value $objects.SI
+        $object | Add-Member -MemberType NoteProperty $processName -Value $objects.ProcessName
+
+        # append objects to the csv file
+        $objects | Export-Csv -Path $path -Append -Force -NoTypeInformation
+    }
+}
+
+# call report function
+createReport
+
+=========================================================================================================================================
 # Define the CSV file path
 $csvPath = "C:\path\to\output.csv"
 
