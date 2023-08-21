@@ -14,9 +14,19 @@ $transcriptFileName = "Transcript_$currentDate.txt"
 $transcriptFilePath = Join-Path -Path $transcriptPath -ChildPath $transcriptFileName
 
 # Start transcript recording
-Start-Transcript -Path $transcriptFilePath
+Start-Transcript -Path $transcriptFilePath -force
 
 # Run your desired commands here
 
 # Stop transcript recording
 Stop-Transcript
+
+# The path to the existing file
+$filePath = "C:\Path\To\Your\File.txt"
+
+# The text you want to append
+$textToAppend = "This is the text you want to append."
+
+# Append text to the file
+$textToAppend | Out-File -FilePath $filePath -Append
+
