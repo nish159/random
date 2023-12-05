@@ -5,7 +5,7 @@ $container = "container"
 $topLevelFolder = "parentFolder"
 $folder = "folder" 
 $keyVault = ""
-$secret = ""
+$secretName = ""
 
 <#
   IF A FOLDER HAS A PATH YOU CAN USE THE FOLLOWING 
