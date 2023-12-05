@@ -4,7 +4,6 @@ $storageAccountName = "storageAccount"
 $containerName = "container"
 $topLevelFolder = "parentFolder"
 $folder = "folder" 
-$context = ""
 $keyVault = ""
 $secret = ""
 
