@@ -1,7 +1,7 @@
 # GLOBAL VARIABLES 
-$resourceGroupName = "resourceGroup"
-$storageAccountName = "storageAccount"
-$containerName = "container"
+$resourceGroup = "resourceGroup"
+$storageAccount = "storageAccount"
+$container = "container"
 $topLevelFolder = "parentFolder"
 $folder = "folder" 
 $keyVault = ""
