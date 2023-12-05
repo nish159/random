@@ -1,8 +1,9 @@
 # GLOBAL VARIABLES 
-$resourceGroupName = "YourResourceGroup"
-$storageAccountName = "YourStorageAccount"
-$containerName = "YourContainer"
-$folderPath = "YourFolderPath" 
+$resourceGroupName = "resourceGroup"
+$storageAccountName = "storageAccount"
+$containerName = "container"
+$topLevelFolder = "parentFolder"
+$folder = "folder" 
 $context = ""
 $keyVault = ""
 $secret = ""
@@ -42,7 +43,7 @@ if($latestBlob) {
     Write-Host "    LAST MODIFIED: $($latestBlob.LastModified)"
     Write-Host ""
 } else {
-    Write-Host "NO BLOB FOUND IN '$containerName' CONTAINER OF '$storageAccountName'" -ForegroundColor Red
+    Write-Host "NO BLOB FOUND IN '$container' CONTAINER OF '$storageAccount'" -ForegroundColor Red
 }
 
 # OUTPUT THE DETAILS OF THE MOST RECENT BLOB 
